@@ -1,7 +1,13 @@
 import React, { useLayoutEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  ChevronDownIcon,
+  ScissorsIcon,
+  UserIcon,
+  AdjustmentsHorizontalIcon,
+} from "react-native-heroicons/outline";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -13,26 +19,41 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView>
-      <Text>
+    <SafeAreaView className="bg-white pt-5 ">
+      <View>
         {/*Header*/}
-        <View className="flex-row pb-3 items-center mx-4 space-x-2">
+        <View className="flex-row pb-3 items-center mx-4 space-x-2 ">
           <Image
             source={{
               uri: "https://links.papareact.com/wru",
             }}
             className="h-7 w-7 bg-gray-300 p-4 rounded-full"
           />
-          <View>
+          <View className="flex-1">
             <Text className="font-bold text-gray-400 text-xs">
               Deliver Now!
             </Text>
-            <Text className="font-bold text-xl">Current Location</Text>
+            <Text className="font-bold text-xl">
+              Current Location
+              <ChevronDownIcon size={20} />
+            </Text>
           </View>
+          <UserIcon size={35} />
         </View>
+        {/*Search*/}
+        <View className="flex-row items-center space-x-2 p-2 mx-4 ">
+          <View className="flex-row flex-1 space-x-2  bg-gray-200 pb-3 ">
+            <TextInput placeholder="Search for food" keyboardType="default" />
+          </View>
+          <AdjustmentsHorizontalIcon />
+        </View>
+        {/*Body*/}
+        <ScrollView>
+          {/*Categories*/}
 
-        {/*Burnerr*/}
-      </Text>
+          {/*Featured rows*/}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
