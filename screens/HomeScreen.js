@@ -2,12 +2,14 @@ import React, { useLayoutEffect } from "react";
 import { View, Text, Image, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import {
   ChevronDownIcon,
   ScissorsIcon,
   UserIcon,
   AdjustmentsHorizontalIcon,
 } from "react-native-heroicons/outline";
+import Categories from "../components/Categories";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -19,8 +21,8 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView className="bg-white pt-5 ">
-      <View>
+    <>
+      <SafeAreaView className="bg-white pt-5 ">
         {/*Header*/}
         <View className="flex-row pb-3 items-center mx-4 space-x-2 ">
           <Image
@@ -41,20 +43,29 @@ const HomeScreen = () => {
           <UserIcon size={35} />
         </View>
         {/*Search*/}
-        <View className="flex-row items-center space-x-2 p-2 mx-4 ">
-          <View className="flex-row flex-1 space-x-2  bg-gray-200 pb-3 ">
-            <TextInput placeholder="Search for food" keyboardType="default" />
+        <View className="flex-row items-center space-x-2 p-2 mx-4  ">
+          <View className="flex-row flex-1 space-x-2  bg-gray-200 pb-3 rounded-md ">
+            <TextInput
+              type="text"
+              // className="dark:focus:border-blue-200 dark:focus:ring-blue-200"
+              placeholder="Search for food"
+              required
+              keyboardType="default"
+            />
           </View>
           <AdjustmentsHorizontalIcon />
         </View>
+      </SafeAreaView>
+      <View>
         {/*Body*/}
         <ScrollView>
           {/*Categories*/}
+          <Categories />
 
           {/*Featured rows*/}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 
