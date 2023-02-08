@@ -38,7 +38,7 @@ export default {
     },
     {
       name: 'rating',
-      title: 'rating of the restaurant',
+      title: 'Rating of the Restaurant',
       type: 'number',
       validation: (Rule) =>
         Rule.required().min(1).max(5).error('Please enter a number between 1 and 5'),
