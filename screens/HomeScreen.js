@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState} from "react";
 import { View, Text, Image, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,7 +10,10 @@ import {
 import Categories from "../components/Categories";
 import FeaturedRow from "../components/FeaturedRow";
 
+
 const HomeScreen = () => {
+  const [featuredCategories, setFeaturedCategories] = useState([]);
+
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -18,6 +21,7 @@ const HomeScreen = () => {
       headerShown: false,
     });
   }, []);
+
 
   return (
     <>
