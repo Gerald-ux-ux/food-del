@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, View, Image, Text } from "react-native";
 import { StarIcon } from "react-native-heroicons/outline";
+import { urlFor } from '../sanity'
 
 const RestaurantCard = ({
   id,

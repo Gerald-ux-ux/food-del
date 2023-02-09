@@ -2,40 +2,34 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import RestaurantCard from "./RestaurantCard";
+import client from "../sanity";
 
 const FeaturedRow = ({ id, title, description }) => {
-  const sanityClient = require("@sanity/client")({
-    projectId: "00ukpm5n",
-    dataset: "production",
-    useCdn: true,
-    apiVersion: "2021-10-21",
-  });
-
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    sanityClient
-      .fetch(
-        ` *[_type == 'featured' && _id == $id] {
+    client.fetch(
+      `
+  *[_type == 'featured' && _id == $id] {
     ...,
     restaurant[] ->{
       ...,
-      dishes[] -> {
+      dish[] -> {
         type ->{
           name
         }
       }
     }
-  }[0]`,
-        {id}
-      )
-      .then((data) => {
-        setRestaurants(data.restaurants);
-      });
+  }[0]
+    `,
+      { id }
+    )
+    .then(data => {
+      setRestaurants(data.restaurants)
+    })
   }, []);
-  
 
-  console.log(restaurants);
+  console.log(restaurants)
 
   return (
     <View>
