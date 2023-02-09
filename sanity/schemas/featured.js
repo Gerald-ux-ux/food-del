@@ -5,7 +5,7 @@ export default {
   fields: [
     {
       name: 'name',
-      title: 'Name of dish',
+      title: 'Featured Category Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
     },
@@ -16,10 +16,10 @@ export default {
       validation: (Rule) => Rule.max(200),
     },
     {
-      name: 'restautants',
+      name: 'restaurant',
       title: 'Restaurants',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'restuarant'}]}],
+      of: [{type: 'reference', to: [{type: 'restaurant'}]}],
     },
   ],
 }

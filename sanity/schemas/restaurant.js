@@ -1,10 +1,10 @@
 export default {
-  name: 'restuarant',
+  name: 'restaurant',
   title: 'Restaurant',
   type: 'document',
   fields: [
     {
-      name: 'restuarant',
+      name: 'restaurant',
       title: 'Restaurant name',
       type: 'string',
       validation: (Rule) => Rule.required(),

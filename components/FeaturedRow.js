@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import RestaurantCard from "./RestaurantCard";
 
 const FeaturedRow = ({ id, title, description }) => {
+  const sanityClient = require("@sanity/client")({
+    projectId: "00ukpm5n",
+    dataset: "production",
+    useCdn: true,
+    apiVersion: "2021-10-21",
+  });
+
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        ` *[_type == 'featured' && _id == $id] {
+    ...,
+    restaurant[] ->{
+      ...,
+      dishes[] -> {
+        type ->{
+          name
+        }
+      }
+    }
+  }[0]`,
+        {id}
+      )
+      .then((data) => {
+        setRestaurants(data.restaurants);
+      });
+  }, []);
+  
+
+  console.log(restaurants);
+
   return (
     <View>
       <View className="mt-4 flex-row items-center justify-between px-4">
@@ -19,55 +52,24 @@ const FeaturedRow = ({ id, title, description }) => {
         showsHorizontalScrollIndicator={false}
         className="pt-4"
       >
+        {restaurants?.map((restaurant) => {
+          return (
+            <RestaurantCard
+              key={restaurant._id}
+              id={restaurant._id}
+              imgUrl={restaurant.image}
+              address={restaurant.address}
+              title={restaurant.name}
+              dishes={restaurant.dishes}
+              rating={restaurant.rating}
+              short_description={restaurant.short_description}
+              genre={restaurant.type?.name}
+              long={restaurant.long}
+              lat={restaurant.lat}
+            />
+          );
+        })}
         {/*Restaurant cards*/}
-        <RestaurantCard
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="Sushi"
-          rating={3.7}
-          genre="Japanese"
-          address="123 Main Street"
-          short_description="Sushi is the best japanese food "
-          dishes={[]}
-          long={20}
-          lat={20}
-        />
-        <RestaurantCard
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="Sushi"
-          rating={3.7}
-          genre="Japanese"
-          address="123 Main Street"
-          short_description="Sushi is the best japanese food "
-          dishes={[]}
-          long={20}
-          lat={20}
-        />
-        <RestaurantCard
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="Sushi"
-          rating={3.7}
-          genre="Japanese"
-          address="123 Main Street"
-          short_description="Sushi is the best japanese food "
-          dishes={[]}
-          long={20}
-          lat={20}
-        />
-        <RestaurantCard
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="Sushi"
-          rating={3.7}
-          genre="Japanese"
-          address="123 Main Street"
-          short_description="Sushi is the best japanese food "
-          dishes={[]}
-          long={20}
-          lat={20}
-        />
       </ScrollView>
     </View>
   );

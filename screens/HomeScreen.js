@@ -18,19 +18,18 @@ const sanityClient = require("@sanity/client")({
 });
 
 const HomeScreen = () => {
-  const [featuredCategories, setFeaturedCategories] = useState(null);
+  const [featuredCategories, setFeaturedCategories] = useState([]);
 
-  const query = `     *[_type == 'featured' ] {
+  const query = `   *[_type == 'featured' ] {
   ...,
   restaurants[] {
     ...,
-    dishes[] {
       types {
         name
-      }
     }
   }
-}`;
+}
+`;
   useEffect(() => {
     sanityClient.fetch(query).then((data) => {
       setFeaturedCategories(data);
