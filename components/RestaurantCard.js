@@ -28,14 +28,14 @@ const RestaurantCard = ({
         <View className="items-center flex-row space-x-1">
           <StarIcon opacity={0.5} size={22} />
           <Text className='text-black-200 text-xs'>
-            <Text className='text-blue-500'>{rating}</Text> . {genre}
+            <Text className='text-blue-500'>{rating}</Text> {genre}
           </Text>
               </View>
               
               <View className='felx-row  space-x-1'>
                   {/* <LocationMarkerIcon /> */}
                   <Text className='text-xs text-gray-500'>
-                      Nearby . {address}
+                     {address}
                   </Text>
               </View>
       </View>
