@@ -19,7 +19,7 @@ const RestaurantCard = ({
     <TouchableOpacity className='mr-3 rounded-md bg-white shadow '>
       <Image
         source={{
-          uri: imgUrl,
+          uri: urlFor (imgUrl).url(),
         }}
         className="h-36 w-64 rounded-sm"
       />

@@ -25,5 +25,11 @@ export default {
       title: 'image of the Dish',
       type: 'image',
     },
+    // {
+    //   name: 'restaurant',
+    //   title: 'Restaurant',
+    //   type: 'reference',
+    //   to: [{type: 'restaurant'}],
+    // },
   ],
 }

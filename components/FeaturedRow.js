@@ -2,34 +2,44 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import RestaurantCard from "./RestaurantCard";
-import client from "../sanity";
+// import client from "../sanity";
 
 const FeaturedRow = ({ id, title, description }) => {
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurant, setRestaurant] = useState([]);
+
+  const sanityClient = require("@sanity/client")({
+    projectId: "00ukpm5n",
+    dataset: "production",
+    useCdn: true,
+    apiVersion: "2021-10-21",
+  });
 
   useEffect(() => {
-    client.fetch(
-      `
+    sanityClient
+      .fetch(
+        `
   *[_type == 'featured' && _id == $id] {
     ...,
     restaurant[] ->{
       ...,
-      dish[] -> {
-        type ->{
+      dishes[] -> {
+        ...,
+        types ->{
+          ...,
           name
         }
       }
     }
   }[0]
     `,
-      { id }
-    )
-    .then(data => {
-      setRestaurants(data.restaurants)
-    })
+        { id }
+      )
+      .then((data) => {
+        // console.log(data?.restaurant)
+        setRestaurant(data?.restaurant);
+        // console.log(restaurant);
+      });
   }, []);
-
-  console.log(restaurants)
 
   return (
     <View>
@@ -46,14 +56,14 @@ const FeaturedRow = ({ id, title, description }) => {
         showsHorizontalScrollIndicator={false}
         className="pt-4"
       >
-        {restaurants?.map((restaurant) => {
+        {restaurant?.map((restaurant) => {
           return (
             <RestaurantCard
               key={restaurant._id}
               id={restaurant._id}
               imgUrl={restaurant.image}
               address={restaurant.address}
-              title={restaurant.name}
+              title={restaurant.restaurant}
               dishes={restaurant.dishes}
               rating={restaurant.rating}
               short_description={restaurant.short_description}

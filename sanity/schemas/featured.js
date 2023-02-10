@@ -11,7 +11,7 @@ export default {
     },
     {
       name: 'short_description',
-      title: 'Short description',
+      title: 'Short Description',
       type: 'string',
       validation: (Rule) => Rule.max(200),
     },
@@ -20,6 +20,12 @@ export default {
       title: 'Restaurants',
       type: 'array',
       of: [{type: 'reference', to: [{type: 'restaurant'}]}],
+    },
+    {
+      name: 'dishes',
+      title: 'Dishes',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'dish'}]}],
     },
   ],
 }
