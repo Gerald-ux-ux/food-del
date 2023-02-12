@@ -63,10 +63,10 @@ const HomeScreen = () => {
             </Text>
             <Text className="font-bold text-xl">
               Current Location
-              <ChevronDownIcon size={20} />
+              <ChevronDownIcon size={20} color="#000000" />
             </Text>
           </View>
-          <UserIcon size={35} />
+          <UserIcon size={35} color="#000000" />
         </View>
         {/*Search*/}
         <View className="flex-row items-center space-x-2 p-2 mx-4  ">
@@ -79,7 +79,7 @@ const HomeScreen = () => {
               keyboardType="default"
             />
           </View>
-          <AdjustmentsHorizontalIcon />
+          <AdjustmentsHorizontalIcon color="#000000" />
         </View>
       </SafeAreaView>
       <View>
