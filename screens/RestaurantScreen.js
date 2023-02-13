@@ -4,7 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
 import { urlFor } from "../sanity";
 import { TouchableOpacity } from "react-native";
-import { ArrowLeftIcon, ChevronRightIcon, QuestionMarkCircleIcon, StarIcon } from "react-native-heroicons/outline";
+import {
+  ArrowLeftIcon,
+  ChevronRightIcon,
+  QuestionMarkCircleIcon,
+  StarIcon,
+} from "react-native-heroicons/outline";
 import {
   ChevronDownIcon,
   UserIcon,
@@ -68,29 +73,30 @@ const RestaurantScreen = () => {
           </View>
           <Text className="text-gray-500 mt-2 pb-4">{short_description}</Text>
         </View>
+
         <TouchableOpacity className="flex-row items-center space-x-2 p-4 border-y border-gray-300">
-          <QuestionMarkCircleIcon color="gray" opacity={0.6} size={20} />
           <Text className="font-bold text-md flex-1 pt-2">
             Have a food allergy?
           </Text>
+          <QuestionMarkCircleIcon color="gray" opacity={0.6} size={20} />
           <ChevronRightIcon color="#000000" />
         </TouchableOpacity>
       </View>
 
       <Text className="px-4 pt-6 mb-3 font-bold text-xl">Menu</Text>
-          {/* Dishrow */}
-          {dishes.map((dish) => {
-              return (
-                  <DishRow
-                      key={dish._id}
-                      id={dish._id}
-                      name={dish.name}
-                      description={dish.short_description}
-                      price={dish.price}
-                      image={dish.image}
-                  />
-              )
-          })}
+      {/* Dishrow */}
+      {dishes.map((dish) => {
+        return (
+          <DishRow
+            key={dish._id}
+            id={dish._id}
+            name={dish.name}
+            description={dish.short_description}
+            price={dish.price}
+            image={dish.image}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
