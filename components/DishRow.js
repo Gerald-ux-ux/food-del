@@ -9,6 +9,7 @@ import {
   addToBasket,
   selectBasketItems,
   selectBasketItemsById,
+  removeFromBasket
 } from "../features/basketSlice";
 
 const DishRow = ({ id, name, description, price, image }) => {
@@ -18,6 +19,12 @@ const DishRow = ({ id, name, description, price, image }) => {
 
   const addItemToBasktet = () => {
     dispatch(addToBasket({ id, name, description, price, image }));
+  };
+
+  const removeItemsFromBasket = () => {
+    if (!items.length > 0) 
+      return;
+    dispatch(removeFromBasket({ id }));
   };
 
   return (
@@ -53,7 +60,7 @@ const DishRow = ({ id, name, description, price, image }) => {
       {isPressed && (
         <View className="bg-white px-4">
           <View className="flex-row items-center space-x-2 pb-3">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={removeItemsFromBasket}>
               <MinusCircleIcon
                 size={40}
                 color="#000000"
