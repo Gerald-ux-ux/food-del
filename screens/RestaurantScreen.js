@@ -1,5 +1,5 @@
 import { useRoute } from "@react-navigation/native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
 import { urlFor } from "../sanity";
@@ -17,9 +17,12 @@ import {
 } from "react-native-heroicons/outline";
 import DishRow from "../components/DishRow";
 import BaskteIcon from "../components/BaskteIcon";
+import { setRestaurant } from "../features/restaurantSlice";
+import { useDispatch } from "react-redux";
 
 const RestaurantScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const {
     params: {
@@ -35,6 +38,24 @@ const RestaurantScreen = () => {
       lat,
     },
   } = useRoute();
+
+
+  useEffect(() => {
+    dispatch(
+      setRestaurant({
+        id,
+        imgUrl,
+        title,
+        rating,
+        genre,
+        address,
+        short_description,
+        dishes,
+        long,
+        lat,
+      })
+    );
+  }, [dispatch]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -85,25 +106,25 @@ const RestaurantScreen = () => {
             <ChevronRightIcon color="#000000" />
           </TouchableOpacity>
         </View>
-
-        <Text className="px-4 pt-6 mb-3 font-bold text-xl">Menu</Text>
-        {/* Dishrow */}
-        {dishes.map((dish) => {
-          return (
-            <DishRow
-              key={dish._id}
-              id={dish._id}
-              name={dish.name}
-              description={dish.short_description}
-              price={dish.price}
-              image={dish.image}
-            />
-          );
-        })}
+        <View className="pb-36">
+          <Text className="px-4 pt-6 mb-3 font-bold text-xl">Menu</Text>
+          {/* Dishrow */}
+          {dishes.map((dish) => {
+            return (
+              <DishRow
+                key={dish._id}
+                id={dish._id}
+                name={dish.name}
+                description={dish.short_description}
+                price={dish.price}
+                image={dish.image}
+              />
+            );
+          })}
+        </View>
       </ScrollView>
     </>
   );
-      
 };
 
 export default RestaurantScreen;
