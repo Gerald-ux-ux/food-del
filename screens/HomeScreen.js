@@ -19,17 +19,18 @@ const sanityClient = require("@sanity/client")({
 
 const HomeScreen = () => {
   const [featuredCategories, setFeaturedCategories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const query = `   *[_type == 'featured' ] {
-  ...,
-  restaurants[] {
+  const query = `*[_type == 'featured'] {
     ...,
+    restaurants[] {
+      ...,
       types {
         name
+      }
     }
-  }
-}
-`;
+  }`;
+
   useEffect(() => {
     sanityClient.fetch(query).then((data) => {
       setFeaturedCategories(data);
@@ -44,7 +45,16 @@ const HomeScreen = () => {
     });
   }, []);
 
-  
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+  };
+
+const filteredCategories = featuredCategories.filter((category) => {
+  // Combine name and description fields into one string for searching
+  const searchString =
+    `${category.name} ${category.short_description}`.toLowerCase();
+  return searchString.includes(searchQuery.toLowerCase());
+});
 
   return (
     <>
@@ -70,13 +80,15 @@ const HomeScreen = () => {
         </View>
         {/*Search*/}
         <View className="flex-row items-center space-x-2 p-2 mx-4  ">
-          <View className="flex-row flex-1 space-x-2  bg-gray-200 pb-3 rounded-md ">
+          <View className="flex-row flex-1 space-x-2  bg-gray-200 pb-3 rounded-lg p-2 ">
             <TextInput
               type="text"
-              // className="dark:focus:border-blue-200 dark:focus:ring-blue-200"
-              placeholder="Search for food"
+              placeholder="Search for a category..."
+              autoFocus = "true"
               required
               keyboardType="default"
+              value={searchQuery}
+              onChangeText={(text) => setSearchQuery(text)}
             />
           </View>
           <AdjustmentsHorizontalIcon color="#000000" />
@@ -89,8 +101,7 @@ const HomeScreen = () => {
           <Categories />
 
           {/*Featured */}
-
-          {featuredCategories?.map((category) => {
+          {filteredCategories.map((category) => {
             return (
               <FeaturedRow
                 key={category._id}
