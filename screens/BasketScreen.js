@@ -86,7 +86,7 @@ const BasketScreen = () => {
                 </Text>
                 <TouchableOpacity>
                   <Text
-                    className="text-[#ea5f5f] text-xs "
+                    className="text-[#ea5f5f] text-xs  "
                     onPress={() => dispatch(removeFromBasket({ id: key }))}
                   >
                     Remove
@@ -117,6 +117,11 @@ const BasketScreen = () => {
               <Currency quantity={basketTotal + 2.99} currency="GBP" />
             </Text>
           </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PreparingOrderScreen')}
+            className='rounded-lg p-4 bg-[#000000]'>
+            <Text className='text-white text-center text-lg font-bold'>Place Order</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
